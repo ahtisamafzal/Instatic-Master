@@ -40,7 +40,7 @@ import { requestCmsSiteReload } from '@admin/state/adminEvents'
 import { Button } from '@ui/components/Button'
 import type { PixelArtIconComponent } from '@core/dashboard'
 import type { OnboardingFacts, OnboardingStepState } from '../hooks/useOnboardingState'
-import { LiquidProgressRing } from './LiquidProgressRing'
+import { LiquidProgressRing } from '@ui/components/LiquidProgressRing'
 import {
   FrameworkManagerDialog,
   type FrameworkManagerApplier,

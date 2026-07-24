@@ -10,7 +10,7 @@ import { useWorkspaceLayout } from '@admin/state/workspaceLayout'
 import { dataTableHasField } from '@core/data/fields'
 import {
   POST_TYPE_FIELD_FEATURED_MEDIA,
-  POST_TYPE_FIELD_SEO_TITLE,
+  POST_TYPE_FIELD_SEO,
   type DataField,
   type DataRowCells,
   type DataTable,
@@ -136,7 +136,7 @@ export function ContentSettingsPanel({
   onEditFeaturedMedia,
 }: ContentSettingsPanelProps) {
   const setRightPanel = useWorkspaceLayout((s) => s.setRightPanel)
-  const seoEnabled = selectedCollection ? dataTableHasField(selectedCollection, POST_TYPE_FIELD_SEO_TITLE) : false
+  const seoEnabled = selectedCollection ? dataTableHasField(selectedCollection, POST_TYPE_FIELD_SEO) : false
   const featuredMediaEnabled = selectedCollection ? dataTableHasField(selectedCollection, POST_TYPE_FIELD_FEATURED_MEDIA) : false
   const customFields = selectedCollection?.fields.filter(isEditableCustomField) ?? []
   const authorRoleLabel = selectedEntry ? contentAuthorRoleLabel(selectedEntry) : null
