@@ -22,6 +22,7 @@
 import type { Page, PageNode, PageTemplateConfig } from '@core/page-tree'
 import { parsePageTemplate } from '@core/page-tree'
 import { parseSeoMetadata } from '@core/seo'
+import { parseAeoMetadata } from '@core/aeo'
 import type { DataRow, DataRowCells } from './schemas'
 
 // ---------------------------------------------------------------------------
@@ -58,6 +59,7 @@ export function pageFromRow(row: DataRow): Page {
   // Template reconstruction
   const template = readTemplateFromCells(cells)
   const seo = parseSeoMetadata(cells.seo)
+  const aeo = parseAeoMetadata(cells.aeo)
 
   return {
     id: row.id,
@@ -67,6 +69,7 @@ export function pageFromRow(row: DataRow): Page {
     rootNodeId,
     ...(template !== null ? { template } : {}),
     ...(seo !== undefined ? { seo } : {}),
+    ...(aeo !== undefined ? { aeo } : {}),
     ownerUserId: row.authorUserId ?? null,
     createdByUserId: row.createdByUserId ?? null,
     updatedByUserId: row.updatedByUserId ?? null,
@@ -111,6 +114,10 @@ export function pageToCells(page: Page): DataRowCells {
 
   if (page.seo) {
     cells.seo = page.seo
+  }
+
+  if (page.aeo) {
+    cells.aeo = page.aeo
   }
 
   return cells
