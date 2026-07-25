@@ -30,6 +30,7 @@ import { siteTools } from '../tools/site'
 import { styleMcpTools } from './tools/styleTools'
 import { contextMcpTools } from './tools/contextTool'
 import { documentMcpTools } from './tools/documentTools'
+import { seoAeoGeoMcpTools } from './tools/seoAeoGeoTools'
 import { createPublishMcpTool, type McpPublishRuntime } from './tools/publishTool'
 
 // Server-resolved site read tools whose handlers read the browser-posted
@@ -51,6 +52,7 @@ function allMcpTools(runtime?: McpPublishRuntime): AiTool[] {
     ...contextMcpTools,
     ...styleMcpTools,
     ...documentMcpTools,
+    ...seoAeoGeoMcpTools,
     createPublishMcpTool(runtime),
     ...contentTools,
     ...siteTools,
