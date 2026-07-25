@@ -99,6 +99,11 @@ export function CellEditorRenderer({
       // (/admin/tools/seo), not inline in the grid.
       return <span>Edited in the SEO workspace</span>
 
+    case 'aeoMetadata':
+      // Structured AEO objects (FAQ/How-to) are edited in the AEO workspace,
+      // not inline in the grid.
+      return <span>Edited in the AEO workspace</span>
+
     default: {
       // Exhaustive check: TypeScript will error here if a new field type
       // is added to the discriminated union without a case above.

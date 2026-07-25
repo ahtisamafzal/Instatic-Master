@@ -33,6 +33,7 @@ export const FIELD_TYPE_LABELS: Record<DataFieldType, string> = {
   pageTree: 'Page tree',
   fieldSchema: 'Field schema',
   seoMetadata: 'SEO metadata',
+  aeoMetadata: 'AEO metadata',
 }
 
 export function isMandatoryField(fieldId: string): boolean {

@@ -82,7 +82,7 @@ function buildMetaFields(
       }
       if (field.allowMultiple !== undefined) entry.allowMultiple = field.allowMultiple
       result.push(entry)
-    } else if (field.type === 'pageTree' || field.type === 'fieldSchema' || field.type === 'seoMetadata') {
+    } else if (field.type === 'pageTree' || field.type === 'fieldSchema' || field.type === 'seoMetadata' || field.type === 'aeoMetadata') {
       // Structural types — not part of the instatic binding catalog.
       // pageTree / fieldSchema / seoMetadata cells hold whole documents
       // (tree / field array / SEO object), not scalar values that can be

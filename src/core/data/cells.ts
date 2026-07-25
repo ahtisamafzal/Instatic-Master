@@ -10,6 +10,7 @@
 import { NodeTreeSchema, type NodeTree } from '@core/page-tree'
 import type { BaseNode } from '@core/page-tree'
 import { parseSeoMetadata, type SeoMetadata } from '@core/seo'
+import { parseAeoMetadata, type AeoMetadata } from '@core/aeo'
 import { DataFieldSchema, type DataField, type DataRowCells, type DataTable } from './schemas'
 import { dataTableHasField, isPostTypeBuiltInFieldId } from './fields'
 import { slugFromTitle } from '@core/utils/slug'
@@ -80,6 +81,15 @@ export function readFeaturedMediaCell(cells: DataRowCells): string | null {
  */
 export function readSeoCell(cells: DataRowCells): SeoMetadata | undefined {
   return parseSeoMetadata(cells.seo)
+}
+
+/**
+ * Read the structured `aeo` cell (built-in `aeoMetadata` field). Returns
+ * `undefined` when the cell is missing or malformed — a corrupt AEO object
+ * must never block loading the row.
+ */
+export function readAeoCell(cells: DataRowCells): AeoMetadata | undefined {
+  return parseAeoMetadata(cells.aeo)
 }
 
 /**

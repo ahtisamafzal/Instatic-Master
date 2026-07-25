@@ -34,6 +34,7 @@ const FIELD_ICONS: Record<DataFieldType, IconComponent> = {
   pageTree: LayoutSolidIcon,
   fieldSchema: BracesIcon,
   seoMetadata: SearchSolidIcon,
+  aeoMetadata: SearchSolidIcon,
 }
 
 export function getFieldIcon(type: DataFieldType): IconComponent {

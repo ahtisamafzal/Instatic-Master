@@ -201,6 +201,8 @@ export function applyEditState(
       return { type: 'fieldSchema', ...common }
     case 'seoMetadata':
       return { type: 'seoMetadata', ...common }
+    case 'aeoMetadata':
+      return { type: 'aeoMetadata', ...common }
     default: {
       const _exhaustive: never = field
       void _exhaustive

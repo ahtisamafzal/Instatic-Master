@@ -236,6 +236,17 @@ const SeoMetadataFieldSchema = Type.Object({
   ...FieldCommonProps,
 })
 
+/**
+ * AeoMetadata field — stores the structured AEO object (`AeoMetadata` from
+ * `@core/aeo`: FAQ entries, How-to, Speakable) in the cell. Built-in only:
+ * shipped as the `aeo` field on `page` and `postType` tables, never offered
+ * as a user-created custom field type. Editing surface is the AEO workspace.
+ */
+const AeoMetadataFieldSchema = Type.Object({
+  type: Type.Literal('aeoMetadata'),
+  ...FieldCommonProps,
+})
+
 export const DataFieldSchema = Type.Union([
   TextFieldSchema,
   LongTextFieldSchema,
@@ -253,6 +264,7 @@ export const DataFieldSchema = Type.Union([
   PageTreeFieldSchema,
   FieldSchemaFieldSchema,
   SeoMetadataFieldSchema,
+  AeoMetadataFieldSchema,
 ])
 
 export type DataField = Static<typeof DataFieldSchema>
@@ -282,6 +294,7 @@ export const DATA_FIELD_TYPES = [
   'pageTree',
   'fieldSchema',
   'seoMetadata',
+  'aeoMetadata',
 ] as const
 
 export type DataFieldType = (typeof DATA_FIELD_TYPES)[number]
@@ -495,6 +508,7 @@ export const POST_TYPE_FIELD_SLUG = 'slug'
 export const POST_TYPE_FIELD_BODY = 'body'
 export const POST_TYPE_FIELD_FEATURED_MEDIA = 'featuredMedia'
 export const POST_TYPE_FIELD_SEO = 'seo'
+export const POST_TYPE_FIELD_AEO = 'aeo'
 
 export const POST_TYPE_MANDATORY_FIELD_IDS = [
   POST_TYPE_FIELD_TITLE,
@@ -505,6 +519,7 @@ export const POST_TYPE_OPTIONAL_BUILTIN_FIELD_IDS = [
   POST_TYPE_FIELD_BODY,
   POST_TYPE_FIELD_FEATURED_MEDIA,
   POST_TYPE_FIELD_SEO,
+  POST_TYPE_FIELD_AEO,
 ] as const
 
 // ---------------------------------------------------------------------------

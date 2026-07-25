@@ -85,6 +85,9 @@ function previewValueForField(field: DataField): unknown {
       title: 'Example Post — Site Name',
       description: 'A short description of this example post for search engines.',
     }
+    case 'aeoMetadata': return {
+      faq: [{ question: 'Example question?', answer: 'Example answer for preview.' }],
+    }
     default: {
       // Exhaustive check: TypeScript will error here if a new field type
       // is added to the discriminated union without a case above.

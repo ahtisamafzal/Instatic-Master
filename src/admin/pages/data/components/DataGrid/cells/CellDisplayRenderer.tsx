@@ -18,6 +18,7 @@ import {
   readFieldSchemaCell,
   readNodeTreeCell,
   readSeoCell,
+  readAeoCell,
   readNumberCell,
   readStringArrayCell,
   readStringCell,
@@ -441,6 +442,12 @@ export function CellDisplayRenderer({
       const seo = readSeoCell(cells)
       if (!seo || Object.keys(seo).length === 0) return <Empty />
       return <span className={styles.text}>{seo.title ?? 'SEO set'}</span>
+    }
+    case 'aeoMetadata': {
+      const aeo = readAeoCell(cells)
+      const count = aeo?.faq?.length ?? 0
+      if (count === 0) return <Empty />
+      return <span className={styles.text}>{count === 1 ? '1 FAQ' : `${count} FAQs`}</span>
     }
     default: {
       const _exhaustive: never = field
