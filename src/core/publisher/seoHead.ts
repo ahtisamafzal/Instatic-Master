@@ -20,6 +20,7 @@ import {
   type JsonLdEntity,
   type ResolvedSeoMetadata,
 } from '@core/seo'
+import { sameAsUrls } from '@core/geo'
 import { escapeHtml, isSafeUrl } from './utils'
 
 /**
@@ -143,7 +144,18 @@ export function buildDocumentMetaTags(site: SiteDocument, seo: PublishedSeo): Do
     }
   }
 
-  for (const entity of jsonLd) {
+  // GEO sameAs is merged into the Organization entity (one source, no
+  // competing Organization) — D1 of the GEO plan.
+  const sameAs = sameAsUrls(site.settings.geo?.sameAs)
+  const composedJsonLd = sameAs.length > 0
+    ? jsonLd.map((entity) =>
+        entity['@type'] === 'Organization'
+          ? { ...entity, sameAs: [...(Array.isArray(entity.sameAs) ? entity.sameAs : []), ...sameAs] }
+          : entity,
+      )
+    : jsonLd
+
+  for (const entity of composedJsonLd) {
     lines.push(`<script type="application/ld+json">${serializeJsonLd(entity)}</script>`)
   }
 

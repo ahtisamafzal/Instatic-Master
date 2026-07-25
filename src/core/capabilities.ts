@@ -75,6 +75,9 @@ export const CORE_CAPABILITIES = [
   // SEO workspace — read the target index / edit metadata, robots, sitemap.
   'seo.read',
   'seo.manage',
+  // GEO workspace — read/edit site entity sameAs + llms.txt opt-in.
+  'geo.read',
+  'geo.manage',
 ] as const
 
 export type CoreCapability = typeof CORE_CAPABILITIES[number]

@@ -195,6 +195,17 @@ export const CAPABILITY_META: Record<CoreCapability, CapabilityMeta> = {
     label: 'Manage SEO',
     description: 'Edit page/post metadata, site SEO defaults, robots.txt, and sitemap settings.',
   },
+  // ---------------------------------------------------------------------
+  // GEO workspace
+  // ---------------------------------------------------------------------
+  'geo.read': {
+    label: 'View GEO',
+    description: 'Open the GEO workspace and read entity sameAs and llms.txt settings.',
+  },
+  'geo.manage': {
+    label: 'Manage GEO',
+    description: 'Edit site entity sameAs profiles and the llms.txt opt-in.',
+  },
 }
 
 /**

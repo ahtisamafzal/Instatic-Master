@@ -80,6 +80,8 @@ const adminCapabilities: CoreCapability[] = [
   'ai.audit.read',
   'seo.read',
   'seo.manage',
+  'geo.read',
+  'geo.manage',
 ]
 
 const clientCapabilities: CoreCapability[] = [

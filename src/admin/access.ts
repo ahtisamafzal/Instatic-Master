@@ -291,6 +291,8 @@ export function canAccessWorkspace(user: CmsCurrentUser | null, workspace: Admin
       return canAccessAiWorkspace(user)
     case 'seo':
       return hasCapability(user, 'seo.read')
+    case 'geo':
+      return hasCapability(user, 'geo.read')
     case 'account':
       // Self-targeted page — every authenticated user can manage their own
       // profile + devices. Anonymous visitors fall through to false.
@@ -302,7 +304,7 @@ export function firstAccessibleWorkspace(user: CmsCurrentUser | null): AdminWork
   // Dashboard comes first — it's the canonical admin home. Falls through to
   // the next accessible workspace for users whose role doesn't grant
   // `dashboard.read` (rare; only happens with hand-edited custom roles).
-  const order: AdminWorkspace[] = ['dashboard', 'site', 'content', 'data', 'media', 'plugins', 'users', 'ai', 'seo']
+  const order: AdminWorkspace[] = ['dashboard', 'site', 'content', 'data', 'media', 'plugins', 'users', 'ai', 'seo', 'geo']
   return order.find((workspace) => canAccessWorkspace(user, workspace)) ?? null
 }
 
@@ -326,6 +328,8 @@ export function workspacePath(workspace: AdminWorkspace): string {
       return '/admin/ai'
     case 'seo':
       return '/admin/tools/seo'
+    case 'geo':
+      return '/admin/tools/geo'
     case 'pluginPage':
       return '/admin/plugins'
     case 'account':

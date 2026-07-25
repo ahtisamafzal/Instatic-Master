@@ -24,6 +24,7 @@ import { PackageSolidIcon } from 'pixel-art-icons/icons/package-solid'
 import { UsersSolidIcon } from 'pixel-art-icons/icons/users-solid'
 import { ToolCaseSolidIcon } from 'pixel-art-icons/icons/tool-case-solid'
 import { SearchSolidIcon } from 'pixel-art-icons/icons/search-solid'
+import { GlobeSolidIcon } from 'pixel-art-icons/icons/globe-solid'
 import { ChevronDown2Icon } from 'pixel-art-icons/icons/chevron-down-2'
 import { Button } from '@ui/components/Button'
 import { cn } from '@ui/cn'
@@ -197,10 +198,11 @@ export function AdminSectionNavigation({
           onNavigateStart={onWorkspaceNavigateStart}
         />
       )}
-      {(canAccess('seo') || (canAccessPlugins && pluginPages.length > 0)) && (
+      {(canAccess('seo') || canAccess('geo') || (canAccessPlugins && pluginPages.length > 0)) && (
         <ToolsNavDropdown
-          active={section === 'seo' || section === 'pluginPage'}
+          active={section === 'seo' || section === 'geo' || section === 'pluginPage'}
           showSeo={canAccess('seo')}
+          showGeo={canAccess('geo')}
           pluginPages={canAccessPlugins ? pluginPages : []}
           onNavigateStart={onWorkspaceNavigateStart}
         />
@@ -224,11 +226,13 @@ export function AdminSectionNavigation({
 function ToolsNavDropdown({
   active,
   showSeo,
+  showGeo,
   pluginPages,
   onNavigateStart,
 }: {
   active: boolean
   showSeo: boolean
+  showGeo: boolean
   pluginPages: PluginAdminPageRoute[]
   onNavigateStart?: () => void
 }) {
@@ -316,7 +320,16 @@ function ToolsNavDropdown({
               <span>SEO</span>
             </ContextMenuItem>
           )}
-          {showSeo && pluginGroups.size > 0 && <ContextMenuSeparator />}
+          {showGeo && (
+            <ContextMenuItem
+              onClick={() => go('/admin/tools/geo')}
+              data-testid="tools-nav-geo"
+            >
+              <GlobeSolidIcon size={12} aria-hidden="true" />
+              <span>GEO</span>
+            </ContextMenuItem>
+          )}
+          {(showSeo || showGeo) && pluginGroups.size > 0 && <ContextMenuSeparator />}
           {[...pluginGroups.values()].map((pages) => (
             pages.map((page) => (
               <ContextMenuItem
