@@ -23,7 +23,7 @@ import { hasCapability } from '@admin/access'
 import { useCurrentAdminUser } from '@admin/sessionContext'
 import { getErrorMessage } from '@core/utils/errorMessage'
 import { SeoFormRow } from '../seo/components/SeoFormRow'
-import type { GeoEntitySameAsEntry, SiteGeoSettings } from '@core/geo'
+import { computeGeoReport, type GeoEntitySameAsEntry, type SiteGeoSettings } from '@core/geo'
 import { useGeoWorkspace, type GeoWorkspace } from './useGeoWorkspace'
 import styles from './GeoPage.module.css'
 
@@ -60,6 +60,7 @@ function GeoEditor({ workspace, canManage }: { workspace: GeoWorkspace; canManag
   const [error, setError] = useState<string | null>(null)
   const idBase = useId()
 
+  const geoReport = computeGeoReport(draft)
   const isDirty = JSON.stringify(draft) !== JSON.stringify(baseline)
   const sameAs = draft.sameAs ?? []
   const llms = draft.llmsTxt ?? {}
@@ -188,6 +189,20 @@ function GeoEditor({ workspace, canManage }: { workspace: GeoWorkspace; canManag
           />
         </SeoFormRow>
       </section>
+
+      <Separator />
+
+      <div className={styles.scoreSection}>
+        <h2 className={styles.heading}>GEO Score: {geoReport.score}/100</h2>
+        {geoReport.checks.map((check) => (
+          <div key={check.id} className={styles.checkRow}>
+            <span className={check.status === 'pass' ? styles.checkPass : check.status === 'warn' ? styles.checkWarn : styles.checkFail}>
+              {check.status.toUpperCase()}
+            </span>
+            <span>{check.label}{check.advice ? ` — ${check.advice}` : ''}</span>
+          </div>
+        ))}
+      </div>
 
       <Separator />
 

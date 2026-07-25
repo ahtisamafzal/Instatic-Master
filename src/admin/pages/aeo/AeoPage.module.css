@@ -7,3 +7,8 @@
 .saveRow { display: flex; align-items: center; gap: var(--space-s); }
 .savedNote { color: var(--editor-success-text, var(--editor-text-muted)); font-size: 0.85rem; }
 .loadError { color: var(--editor-danger); font-size: 0.9rem; }
+.scoreSection { display: flex; flex-direction: column; gap: var(--space-xs); }
+.checkRow { display: flex; align-items: baseline; gap: var(--space-xs); font-size: 0.85rem; }
+.checkPass { color: var(--editor-success-text, #22c55e); font-weight: 600; min-width: 48px; }
+.checkWarn { color: var(--editor-warning, #eab308); font-weight: 600; min-width: 48px; }
+.checkFail { color: var(--editor-danger, #ef4444); font-weight: 600; min-width: 48px; }

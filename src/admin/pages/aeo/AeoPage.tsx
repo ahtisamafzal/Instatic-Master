@@ -15,7 +15,7 @@ import { hasCapability } from '@admin/access'
 import { useCurrentAdminUser } from '@admin/sessionContext'
 import { getErrorMessage } from '@core/utils/errorMessage'
 import { SeoFormRow } from '../seo/components/SeoFormRow'
-import type { AeoMetadata, FaqEntry } from '@core/aeo'
+import { computeAeoReport, type AeoMetadata, type FaqEntry } from '@core/aeo'
 import { useAeoWorkspace, type AeoWorkspace } from './useAeoWorkspace'
 import styles from './AeoPage.module.css'
 
@@ -54,6 +54,7 @@ function AeoEditor({ workspace, canManage }: { workspace: AeoWorkspace; canManag
   const target = workspace.targets.find((t) => t.id === selectedId) ?? null
   const draft: AeoMetadata = selectedId ? (drafts[selectedId] ?? target?.aeo ?? {}) : {}
   const faq: FaqEntry[] = draft.faq ?? []
+  const aeoReport = computeAeoReport(draft)
   const isDirty = selectedId ? JSON.stringify(draft) !== JSON.stringify(target?.aeo ?? {}) : false
 
   function ensureDraft(): void {
@@ -134,6 +135,19 @@ function AeoEditor({ workspace, canManage }: { workspace: AeoWorkspace; canManag
             <Button type="button" variant="secondary" size="sm" disabled={!canManage} onClick={() => setFaq([...faq, { question: '', answer: '' }])}>
               Add question
             </Button>
+          </div>
+
+          <Separator />
+          <div className={styles.scoreSection}>
+            <h2 className={styles.heading}>AEO Score: {aeoReport.score}/100</h2>
+            {aeoReport.checks.map((check) => (
+              <div key={check.id} className={styles.checkRow}>
+                <span className={check.status === 'pass' ? styles.checkPass : check.status === 'warn' ? styles.checkWarn : styles.checkFail}>
+                  {check.status.toUpperCase()}
+                </span>
+                <span>{check.label}{check.advice ? ` — ${check.advice}` : ''}</span>
+              </div>
+            ))}
           </div>
 
           <Separator />
