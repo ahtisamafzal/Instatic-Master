@@ -56,12 +56,19 @@ interface SeoPreviewEditorProps {
 }
 
 /** Field-id suffix each report check focuses when clicked. */
-const CHECK_FIELD: Record<SeoCheckId, SeoDraftField | 'noindex'> = {
+const CHECK_FIELD: Record<SeoCheckId, SeoDraftField | 'noindex' | 'xCard'> = {
   title: 'title',
   description: 'description',
   canonical: 'canonicalUrl',
   socialImage: 'ogImage',
   imageAlt: 'ogImageAlt',
+  xImage: 'xImage',
+  xImageAlt: 'xImageAlt',
+  ogTitle: 'ogTitle',
+  ogDescription: 'ogDescription',
+  xTitle: 'xTitle',
+  xDescription: 'xDescription',
+  xCard: 'xCard',
   indexable: 'noindex',
 }
 
