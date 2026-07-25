@@ -114,6 +114,20 @@ function GeoEditor({ workspace, canManage }: { workspace: GeoWorkspace; canManag
         <p className={styles.readOnlyNote} role="status">Read-only — your role does not include Manage GEO.</p>
       )}
 
+      <div className={styles.scoreSection}>
+        <h2 className={styles.heading}>GEO Score: {geoReport.score}/100</h2>
+        {geoReport.checks.map((check) => (
+          <div key={check.id} className={styles.checkRow}>
+            <span className={check.status === 'pass' ? styles.checkPass : check.status === 'warn' ? styles.checkWarn : styles.checkFail}>
+              {check.status.toUpperCase()}
+            </span>
+            <span>{check.label}{check.advice ? ` — ${check.advice}` : ''}</span>
+          </div>
+        ))}
+      </div>
+
+      <Separator />
+
       <section className={styles.section} aria-label="Entity identity">
         <h2 className={styles.heading}>Entity identity (sameAs)</h2>
         <p className={styles.hint}>
@@ -189,20 +203,6 @@ function GeoEditor({ workspace, canManage }: { workspace: GeoWorkspace; canManag
           />
         </SeoFormRow>
       </section>
-
-      <Separator />
-
-      <div className={styles.scoreSection}>
-        <h2 className={styles.heading}>GEO Score: {geoReport.score}/100</h2>
-        {geoReport.checks.map((check) => (
-          <div key={check.id} className={styles.checkRow}>
-            <span className={check.status === 'pass' ? styles.checkPass : check.status === 'warn' ? styles.checkWarn : styles.checkFail}>
-              {check.status.toUpperCase()}
-            </span>
-            <span>{check.label}{check.advice ? ` — ${check.advice}` : ''}</span>
-          </div>
-        ))}
-      </div>
 
       <Separator />
 

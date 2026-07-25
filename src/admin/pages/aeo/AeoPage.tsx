@@ -100,6 +100,18 @@ function AeoEditor({ workspace, canManage }: { workspace: AeoWorkspace; canManag
 
       {selectedId && (
         <>
+          <div className={styles.scoreSection}>
+            <h2 className={styles.heading}>AEO Score: {aeoReport.score}/100</h2>
+            {aeoReport.checks.map((check) => (
+              <div key={check.id} className={styles.checkRow}>
+                <span className={check.status === 'pass' ? styles.checkPass : check.status === 'warn' ? styles.checkWarn : styles.checkFail}>
+                  {check.status.toUpperCase()}
+                </span>
+                <span>{check.label}{check.advice ? ` — ${check.advice}` : ''}</span>
+              </div>
+            ))}
+          </div>
+
           <Separator />
           <div className={styles.faqSection}>
             <h2 className={styles.heading}>FAQ questions</h2>
@@ -135,19 +147,6 @@ function AeoEditor({ workspace, canManage }: { workspace: AeoWorkspace; canManag
             <Button type="button" variant="secondary" size="sm" disabled={!canManage} onClick={() => setFaq([...faq, { question: '', answer: '' }])}>
               Add question
             </Button>
-          </div>
-
-          <Separator />
-          <div className={styles.scoreSection}>
-            <h2 className={styles.heading}>AEO Score: {aeoReport.score}/100</h2>
-            {aeoReport.checks.map((check) => (
-              <div key={check.id} className={styles.checkRow}>
-                <span className={check.status === 'pass' ? styles.checkPass : check.status === 'warn' ? styles.checkWarn : styles.checkFail}>
-                  {check.status.toUpperCase()}
-                </span>
-                <span>{check.label}{check.advice ? ` — ${check.advice}` : ''}</span>
-              </div>
-            ))}
           </div>
 
           <Separator />
