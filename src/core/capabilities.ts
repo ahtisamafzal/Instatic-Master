@@ -78,6 +78,9 @@ export const CORE_CAPABILITIES = [
   // GEO workspace — read/edit site entity sameAs + llms.txt opt-in.
   'geo.read',
   'geo.manage',
+  // AEO workspace — read/edit per-target FAQ + How-to structured data.
+  'aeo.read',
+  'aeo.manage',
 ] as const
 
 export type CoreCapability = typeof CORE_CAPABILITIES[number]

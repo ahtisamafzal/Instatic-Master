@@ -25,6 +25,7 @@ import { UsersSolidIcon } from 'pixel-art-icons/icons/users-solid'
 import { ToolCaseSolidIcon } from 'pixel-art-icons/icons/tool-case-solid'
 import { SearchSolidIcon } from 'pixel-art-icons/icons/search-solid'
 import { GlobeSolidIcon } from 'pixel-art-icons/icons/globe-solid'
+import { BookOpenSolidIcon } from 'pixel-art-icons/icons/book-open-solid'
 import { ChevronDown2Icon } from 'pixel-art-icons/icons/chevron-down-2'
 import { Button } from '@ui/components/Button'
 import { cn } from '@ui/cn'
@@ -198,11 +199,12 @@ export function AdminSectionNavigation({
           onNavigateStart={onWorkspaceNavigateStart}
         />
       )}
-      {(canAccess('seo') || canAccess('geo') || (canAccessPlugins && pluginPages.length > 0)) && (
+      {(canAccess('seo') || canAccess('geo') || canAccess('aeo') || (canAccessPlugins && pluginPages.length > 0)) && (
         <ToolsNavDropdown
-          active={section === 'seo' || section === 'geo' || section === 'pluginPage'}
+          active={section === 'seo' || section === 'geo' || section === 'aeo' || section === 'pluginPage'}
           showSeo={canAccess('seo')}
           showGeo={canAccess('geo')}
+          showAeo={canAccess('aeo')}
           pluginPages={canAccessPlugins ? pluginPages : []}
           onNavigateStart={onWorkspaceNavigateStart}
         />
@@ -227,12 +229,14 @@ function ToolsNavDropdown({
   active,
   showSeo,
   showGeo,
+  showAeo,
   pluginPages,
   onNavigateStart,
 }: {
   active: boolean
   showSeo: boolean
   showGeo: boolean
+  showAeo: boolean
   pluginPages: PluginAdminPageRoute[]
   onNavigateStart?: () => void
 }) {
@@ -329,7 +333,16 @@ function ToolsNavDropdown({
               <span>GEO</span>
             </ContextMenuItem>
           )}
-          {(showSeo || showGeo) && pluginGroups.size > 0 && <ContextMenuSeparator />}
+          {showAeo && (
+            <ContextMenuItem
+              onClick={() => go('/admin/tools/aeo')}
+              data-testid="tools-nav-aeo"
+            >
+              <BookOpenSolidIcon size={12} aria-hidden="true" />
+              <span>AEO</span>
+            </ContextMenuItem>
+          )}
+          {(showSeo || showGeo || showAeo) && pluginGroups.size > 0 && <ContextMenuSeparator />}
           {[...pluginGroups.values()].map((pages) => (
             pages.map((page) => (
               <ContextMenuItem

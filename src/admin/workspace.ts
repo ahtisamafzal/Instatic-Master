@@ -33,5 +33,6 @@ export type AdminWorkspace =
   | 'ai'
   | 'seo'
   | 'geo'
+  | 'aeo'
   | 'pluginPage'
   | 'account'

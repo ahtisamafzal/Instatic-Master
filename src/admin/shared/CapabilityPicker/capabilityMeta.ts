@@ -206,6 +206,17 @@ export const CAPABILITY_META: Record<CoreCapability, CapabilityMeta> = {
     label: 'Manage GEO',
     description: 'Edit site entity sameAs profiles and the llms.txt opt-in.',
   },
+  // ---------------------------------------------------------------------
+  // AEO workspace
+  // ---------------------------------------------------------------------
+  'aeo.read': {
+    label: 'View AEO',
+    description: 'Open the AEO workspace and read FAQ and How-to structured data.',
+  },
+  'aeo.manage': {
+    label: 'Manage AEO',
+    description: 'Edit per-target FAQ and How-to structured data.',
+  },
 }
 
 /**

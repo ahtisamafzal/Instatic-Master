@@ -82,6 +82,8 @@ const adminCapabilities: CoreCapability[] = [
   'seo.manage',
   'geo.read',
   'geo.manage',
+  'aeo.read',
+  'aeo.manage',
 ]
 
 const clientCapabilities: CoreCapability[] = [
