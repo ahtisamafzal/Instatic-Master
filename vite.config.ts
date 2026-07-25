@@ -37,6 +37,9 @@ function shouldProxyPublicSiteRequest(req: IncomingMessage): boolean {
   //   /_instatic/css/     → per-site published CSS bundle (reset / framework / style)
   if (pathname.startsWith('/_instatic/assets/')) return true
   if (pathname.startsWith('/_instatic/css/')) return true
+  // First-party generated crawl files — extension-bearing paths that must
+  // reach the Bun server, not fall through to the admin SPA shell.
+  if (pathname === '/robots.txt' || pathname === '/sitemap.xml' || pathname === '/llms.txt') return true
 
   return pathname === '/' || !FILE_EXTENSION_RE.test(pathname)
 }
@@ -183,6 +186,11 @@ export default defineConfig({
       // pixel-art-icons resolves through node_modules (link: dep during local
       // dev, registry version once published). No alias needed.
     },
+  },
+  optimizeDeps: {
+    // AdminSectionNavigation (the Tools/SEO nav) loads lazily, so the initial
+    // dependency scan never sees this icon and runtime resolution 500s. Force it.
+    include: ['pixel-art-icons/icons/tool-case-solid'],
   },
   build: {
     // Aligned with the per-chunk caps in

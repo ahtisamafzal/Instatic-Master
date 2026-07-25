@@ -2,32 +2,30 @@
  * @core/geo — public barrel.
  *
  * The Generative Engine Optimization engine: persisted site settings (entity
- * `sameAs` graph, `llms.txt` opt-in), the Organization identity JSON-LD
- * builder, and the `llms.txt` / `llms-full.txt` generators. Imported by the
- * publisher (entity JSON-LD) and the server route layer (llms endpoints). Pure
- * leaf: no imports from publisher, server, or admin code.
+ * `sameAs` graph as an extensible list, `llms.txt` opt-in), the sameAs URL
+ * contributor, and the `llms.txt` generator. Imported by the publisher (sameAs
+ * enrichment) and the server route layer (`/llms.txt`). Pure leaf: no imports
+ * from publisher, server, or admin code.
  *
  * Deep imports are gated by `src/__tests__/architecture/no-core-barrel-deep-imports.test.ts`.
  */
 
 export {
+  GeoEntitySameAsEntrySchema,
   GeoEntitySameAsSchema,
   LlmsTxtSettingsSchema,
   SiteGeoSettingsSchema,
   parseSiteGeoSettings,
+  type GeoEntitySameAsEntry,
   type GeoEntitySameAs,
   type LlmsTxtSettings,
   type SiteGeoSettings,
 } from './schema'
 
-export {
-  buildOrganizationEntity,
-  buildGeoJsonLdEntity,
-  type GeoJsonLdEntity,
-} from './jsonLd'
+export { sameAsUrls } from './jsonLd'
 
 export {
   generateLlmsTxt,
-  generateLlmsFullTxt,
+  type LlmsTxtLink,
   type LlmsTxtContext,
 } from './endpoints'

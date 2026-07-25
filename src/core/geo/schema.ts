@@ -1,10 +1,10 @@
 /**
  * GEO settings schemas — the persisted shapes for generative-engine-targeted
- * data: the brand's entity `sameAs` graph (the independent mentions LLMs use
- * to verify identity) and the `llms.txt` / `llms-full.txt` opt-in.
+ * data: the brand's entity `sameAs` identity graph (the independent mentions
+ * LLMs use to verify identity) and the `llms.txt` opt-in.
  *
  * `SiteGeoSettings` lives under `site.settings.geo`. GEO is site-scoped rather
- * than per-target (entity identity and AI-crawler licensing are site-wide
+ * than per-target (entity identity and AI content licensing are site-wide
  * decisions), so there is no per-target GEO cell.
  *
  * Pure leaf module: no imports from publisher, server, or admin code.
@@ -14,29 +14,32 @@ import { Type, type Static } from '@core/utils/typeboxHelpers'
 import { compiledCheck } from '@core/utils/typeboxCompiler'
 
 // ---------------------------------------------------------------------------
-// Entity sameAs — canonical profiles cited as identity proof
+// Entity sameAs — extensible list of canonical profile URLs (identity proof)
 // ---------------------------------------------------------------------------
 
-export const GeoEntitySameAsSchema = Type.Object({
-  linkedinUrl: Type.Optional(Type.String()),
-  youtubeUrl: Type.Optional(Type.String()),
-  wikidataUrl: Type.Optional(Type.String()),
-  githubUrl: Type.Optional(Type.String()),
-  redditUrl: Type.Optional(Type.String()),
-  wikipediaUrl: Type.Optional(Type.String()),
+export const GeoEntitySameAsEntrySchema = Type.Object({
+  label: Type.String({ minLength: 1 }),
+  url: Type.String({ minLength: 1 }),
 })
+
+export type GeoEntitySameAsEntry = Static<typeof GeoEntitySameAsEntrySchema>
+
+/** Ordered list of profile URLs cited as identity proof (LinkedIn, YouTube, Wikidata, GitHub, …). */
+export const GeoEntitySameAsSchema = Type.Array(GeoEntitySameAsEntrySchema)
 
 export type GeoEntitySameAs = Static<typeof GeoEntitySameAsSchema>
 
 // ---------------------------------------------------------------------------
-// llms.txt — opt-in AI content licensing
+// llms.txt — opt-in AI content summary
 // ---------------------------------------------------------------------------
 
 export const LlmsTxtSettingsSchema = Type.Object({
-  /** Opt-in for `/llms.txt` (concise site summary for LLMs). */
+  /** Opt-in for `/llms.txt`. Default off. */
   enabled: Type.Optional(Type.Boolean()),
-  /** Opt-in for `/llms-full.txt` (fuller content — a content-licensing decision). */
-  fullEnabled: Type.Optional(Type.Boolean()),
+  /** Optional custom intro line above the curated links (falls back to the site SEO description). */
+  intro: Type.Optional(Type.String()),
+  /** Target ids (`page:<rowId>` / `row:<rowId>`) excluded from the links section. */
+  excludedTargets: Type.Optional(Type.Array(Type.String())),
 })
 
 export type LlmsTxtSettings = Static<typeof LlmsTxtSettingsSchema>
@@ -46,8 +49,6 @@ export type LlmsTxtSettings = Static<typeof LlmsTxtSettingsSchema>
 // ---------------------------------------------------------------------------
 
 export const SiteGeoSettingsSchema = Type.Object({
-  /** Organization/brand name used as the entity label. Falls back to site name. */
-  entityName: Type.Optional(Type.String()),
   sameAs: Type.Optional(GeoEntitySameAsSchema),
   llmsTxt: Type.Optional(LlmsTxtSettingsSchema),
 })

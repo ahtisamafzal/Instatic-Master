@@ -15,6 +15,7 @@ import { handleHoleRequest, isHoleRuntimeAssetPath, serveHoleRuntimeAsset } from
 import { handleModuleJsAssetRequest, isModuleJsAssetPath } from './handlers/cms/moduleJs'
 import { handlePublicFormRequest } from './forms/handler'
 import { serveRobotsTxt, serveSitemapXml } from './publish/seoEndpoints'
+import { serveLlmsTxt } from './publish/geoEndpoints'
 import { isRuntimePackagePath, tryServeRuntimePackage } from './publish/runtime/packageServer'
 import { jsonResponse } from './http'
 import { binaryResponse, toArrayBuffer } from './binary'
@@ -474,6 +475,7 @@ function tryServeSeoFiles(
   if (req.method !== 'GET' && req.method !== 'HEAD') return null
   if (pathname === '/robots.txt') return serveRobotsTxt(runtime.db, url, req)
   if (pathname === '/sitemap.xml') return serveSitemapXml(runtime.db, url)
+  if (pathname === '/llms.txt') return serveLlmsTxt(runtime.db, url, req)
   return null
 }
 

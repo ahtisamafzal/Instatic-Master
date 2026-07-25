@@ -29,6 +29,7 @@ import { compiledCheck } from '@core/utils/typeboxCompiler'
 import { FrameworkSettingsSchema } from '@core/framework-schema'
 import { SiteFontsSettingsSchema, parseSiteFontsSettings } from '@core/fonts'
 import { SiteSeoSettingsSchema, parseSiteSeoSettings } from '@core/seo'
+import { SiteGeoSettingsSchema, parseSiteGeoSettings } from '@core/geo'
 
 // ---------------------------------------------------------------------------
 // SiteSettingsSchema
@@ -43,6 +44,8 @@ export const SiteSettingsSchema = Type.Object({
   fonts: Type.Optional(SiteFontsSettingsSchema),
   /** Site-wide SEO defaults — absent means none configured. */
   seo: Type.Optional(SiteSeoSettingsSchema),
+  /** Site-wide GEO config (entity sameAs, llms.txt opt-in). */
+  geo: Type.Optional(SiteGeoSettingsSchema),
   /** Keyboard shortcut overrides — defaults to {} — handled in parseSiteSettings. */
   shortcuts: Type.Record(Type.String(), Type.String()),
 })
@@ -88,6 +91,7 @@ export function parseSiteSettings(raw: unknown): SiteSettings {
   const fonts = r.fonts != null ? parseSiteFontsSettings(r.fonts) : undefined
 
   const seo = parseSiteSeoSettings(r.seo)
+  const geo = parseSiteGeoSettings(r.geo)
 
   return {
     ...(typeof r.faviconUrl === 'string' ? { faviconUrl: r.faviconUrl } : {}),
@@ -95,6 +99,7 @@ export function parseSiteSettings(raw: unknown): SiteSettings {
     framework,
     fonts,
     seo,
+    geo,
     shortcuts,
   }
 }
