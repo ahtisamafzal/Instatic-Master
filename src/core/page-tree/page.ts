@@ -19,6 +19,7 @@
 
 import { Type, type Static } from '@core/utils/typeboxHelpers'
 import { SeoMetadataSchema, parseSeoMetadata } from '@core/seo'
+import { AeoMetadataSchema, parseAeoMetadata } from '@core/aeo'
 import { NodeTreeSchema } from './treeSchema'
 import { PageNodeSchema, type PageNode, parsePageNode } from './pageNode'
 import { PageTemplateConfigSchema, parsePageTemplate } from './pageTemplate'
@@ -55,6 +56,7 @@ export const PageSchema = Type.Object({
    * Silently dropped if invalid — handled in parsePage.
    */
   seo: Type.Optional(SeoMetadataSchema),
+  aeo: Type.Optional(AeoMetadataSchema),
 })
 
 export type Page = Static<typeof PageSchema>
@@ -100,6 +102,7 @@ export function parsePage(raw: unknown, pageIndex: number): Page {
 
   const template = parsePageTemplate(r.template)
   const seo = parseSeoMetadata(r.seo)
+  const aeo = parseAeoMetadata(r.aeo)
 
   return {
     id: r.id,
@@ -116,5 +119,6 @@ export function parsePage(raw: unknown, pageIndex: number): Page {
     rootNodeId: r.rootNodeId,
     ...(template !== null ? { template } : {}),
     ...(seo !== undefined ? { seo } : {}),
+    ...(aeo !== undefined ? { aeo } : {}),
   }
 }

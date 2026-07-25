@@ -4,7 +4,8 @@ import { registry } from '@core/module-engine'
 import { publishPage, type PublishedSeo } from '@core/publisher'
 import { buildPageFrame, buildRouteFrame, buildSiteFrame } from '@core/templates/contextFrames'
 import { interpolateTokens } from '@core/templates/tokenInterpolation'
-import { readSeoCell, readTitleCell } from '@core/data/cells'
+import { readSeoCell, readAeoCell, readTitleCell } from '@core/data/cells'
+import { buildAeoJsonLdEntities } from '@core/aeo'
 import { resolveSeoMetadata, buildJsonLdEntities } from '@core/seo'
 import { canonicalPublicOrigin } from '../auth/security'
 import { buildPublishedSiteCssBundle } from './siteCssBundle'
@@ -114,6 +115,9 @@ function buildPageRenderSeo(page: Page, site: SiteDocument): PublishedSeo {
     siteName: site.name,
     organization: site.settings.seo?.organization,
   })
+  if (page.aeo) {
+    jsonLd.push(...buildAeoJsonLdEntities(page.aeo, { origin, routePath: pageFrame.permalink }))
+  }
   return { resolved, jsonLd }
 }
 
@@ -158,6 +162,10 @@ function buildRowRenderSeo(
     siteName: site.name,
     organization: site.settings.seo?.organization,
   })
+  const aeoMeta = readAeoCell(row.cells)
+  if (aeoMeta) {
+    jsonLd.push(...buildAeoJsonLdEntities(aeoMeta, { origin, routePath }))
+  }
   return { resolved, jsonLd }
 }
 

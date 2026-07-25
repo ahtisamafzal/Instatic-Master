@@ -29,3 +29,13 @@ export {
   type LlmsTxtLink,
   type LlmsTxtContext,
 } from './endpoints'
+
+export {
+  computeGeoReport,
+  geoScoreTier,
+  type GeoReport,
+  type GeoCheck,
+  type GeoCheckId,
+  type GeoCheckStatus,
+  type GeoScoreTier,
+} from './health'

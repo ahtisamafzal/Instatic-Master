@@ -39,3 +39,13 @@ export {
   type AeoJsonLdEntity,
   type AeoJsonLdContext,
 } from './jsonLd'
+
+export {
+  computeAeoReport,
+  aeoScoreTier,
+  type AeoReport,
+  type AeoCheck,
+  type AeoCheckId,
+  type AeoCheckStatus,
+  type AeoScoreTier,
+} from './health'
